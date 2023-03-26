@@ -1,7 +1,8 @@
+import React from "react";
 import { renderToString } from "react-dom/server";
 import App from "../client/App";
 
-const html = `<!DOCTYPE html>
+const getMarkup = (app: string) => `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,12 +11,19 @@ const html = `<!DOCTYPE html>
     <title>Document</title>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="root">${app}</div>
 
-    <script src=""></script>
+    <script src="bundle.js"></script>
 </body>
 </html>`;
 
 const ssr = () => {
-//   const content = renderToString();
+  const content = renderToString(<App />);
+  console.log("content", content, App);
+  const html = getMarkup(content);
+  console.log(html);
+
+  return html;
 };
+
+export default ssr;
